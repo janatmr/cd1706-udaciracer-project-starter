@@ -103,14 +103,24 @@ async function handleCreateRace() {
 	// TIP - console logging API responses can be really helpful to know what data shape you received
 	console.log("RACE: ", race)
 	store.race_id = race.ID;
+
+	const raceId = store.race_id;
 	
 	// The race has been created, now start the countdown
 	// TODO - call the async function runCountdown
 
+	await runCountdown();
+
 	// TODO - call the async function startRace
+
+	await startRace(raceId);
+
 	// TIP - remember to always check if a function takes parameters before calling it!
 
 	// TODO - call the async function runRace
+
+	await runRace(raceId);	
+
 }
 
 function runRace(raceID) {
@@ -137,18 +147,35 @@ function runRace(raceID) {
 async function runCountdown() {
 	try {
 		// wait for the DOM to load
-		await delay(1000)
-		let timer = 3
+
+		await delay(1000);
+		let timer = 3;
 
 		return new Promise(resolve => {
 			// TODO - use Javascript's built in setInterval method to count down once per second
 
+			const time = setInterval(() => {
+				document.getElementById('big-numbers').innerHTML = --timer
+				if (timer === 0) {
+					clearInterval(time);
+					resolve();
+					return;
+				}
+			}, 1000);
+
 			// run this DOM manipulation inside the set interval to decrement the countdown for the user
-			document.getElementById('big-numbers').innerHTML = --timer
+			// document.getElementById('big-numbers').innerHTML = --timer
 
 			// TODO - when the setInterval timer hits 0, clear the interval, resolve the promise, and return
 
 		})
+		.then(() => {
+			console.log("run Count Down promise");
+		})
+		.catch((error) => {
+			console.log(error);
+		})
+		
 	} catch(error) {
 		console.log(error);
 	}
