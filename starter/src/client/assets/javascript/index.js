@@ -97,13 +97,12 @@ async function handleCreateRace() {
 	const track_id = store.track_id;
 
 	// const race = TODO - call the asynchronous method createRace, passing the correct parameters
-
-	createRace(player_id, track_id)
+	const race = await createRace(player_id, track_id)
 
 	// TODO - update the store with the race id in the response
 	// TIP - console logging API responses can be really helpful to know what data shape you received
 	console.log("RACE: ", race)
-	// store.race_id = 
+	store.race_id = race.ID;
 	
 	// The race has been created, now start the countdown
 	// TODO - call the async function runCountdown
@@ -337,17 +336,29 @@ function defaultFetchOpts() {
 
 // TODO - Make a fetch call (with error handling!) to each of the following API endpoints 
 
-function getTracks() {
+async function getTracks() {
 	console.log(`calling server :: ${SERVER}/api/tracks`)
 	// GET request to `${SERVER}/api/tracks`
+	try {
+		const response = await fetch(`${SERVER}/api/tracks`);
+		return await response.json();
 
+	} catch (error) {
+		console.log(error);
+	}
 	// TODO: Fetch tracks
 	// TIP: Don't forget a catch statement!
 }
 
-function getRacers() {
+async function getRacers() {
 	// GET request to `${SERVER}/api/cars`
-
+	try {
+		const response = await fetch(`${SERVER}/api/cars`);
+		return await response.json();
+		
+	} catch (error) {
+		console.log(error);
+	}
 	// TODO: Fetch racers
 	// TIP: Do a file search for "TODO" to make sure you find all the things you need to do! There are even some vscode plugins that will highlight todos for you
 }

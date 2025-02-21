@@ -1,2 +1,5 @@
 .DS_Store
 /starter/node_modules
+/api/data.json
+/starter/yarn.lock
+/api/race-server.exe
